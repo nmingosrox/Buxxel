@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from werkzeug.security import generate_password_hash
-from app import db
-from app.models import User
+from buxxel_app import db
+from buxxel_app.models import User
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
 

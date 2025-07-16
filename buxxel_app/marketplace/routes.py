@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from app import db
-from app.models import Product
+from buxxel_app import db
+from buxxel_app.models import Product
 
 marketplace = Blueprint('marketplace', __name__, url_prefix='/marketplace')
 

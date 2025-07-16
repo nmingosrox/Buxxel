@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template
-from app.models import Product
+from buxxel_app.models import Product
 
 dashboard = Blueprint('dashboard', __name__, url_prefix='/dashboard')
 
