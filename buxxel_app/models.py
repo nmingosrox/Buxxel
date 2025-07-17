@@ -1,7 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-
-db = SQLAlchemy()
+from buxxel_app import db
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)

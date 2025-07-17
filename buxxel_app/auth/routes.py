@@ -9,7 +9,7 @@ auth = Blueprint('auth', __name__, url_prefix='/auth')
 def signup():
     if request.method == 'POST':
         email = request.form['email']
-        password = generate_password_hash(request.form['password'], method='sha256')
+        password = generate_password_hash(request.form['password'], method='pbkdf2:sha256', salt_length=8)
         role = request.form['role']
 
         user = User(email=email, password=password, role=role)

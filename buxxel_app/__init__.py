@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
+migrate = Migrate()
 db = SQLAlchemy()
 
 def create_app():
@@ -8,7 +10,7 @@ def create_app():
     app.config.from_pyfile('../config.py')
 
     db.init_app(app)
-
+    migrate.init_app(app, db)
     from buxxel_app.auth.routes import auth
     from buxxel_app.marketplace.routes import marketplace
     from buxxel_app.dashboard.routes import dashboard
