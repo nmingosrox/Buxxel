@@ -1,18 +1,58 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Welcome to Buxxel</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
-<body class="container mt-5">
-  <h1 class="mb-4">✨ Welcome to Buxxel</h1>
-  <p>Decentralized marketplace for creators and buyers.</p>
+{% extends "base.html" %}
+{% block title %}Buxxel — Sell Anything, Anywhere{% endblock %}
 
-  <div class="d-grid gap-3 mt-4">
-    <a href="/auth/signup" class="btn btn-primary">Create an Account</a>
-    <a href="/auth/login" class="btn btn-success">Log In</a>
-    <a href="/marketplace/view" class="btn btn-warning">Explore Marketplace</a>
-    <a href="/dashboard/seller/1" class="btn btn-secondary">View Seller Dashboard</a>
+{% block content %}
+<div class="d-flex justify-content-center my-4">
+  <img src="https://ik.imagekit.io/mon8rxoqi/buxxel-high-resolution-logo-transparent.png?updatedAt=1752758123893"
+       alt="Buxxel Logo"
+       height="50">
+</div>
+
+<div class="container mt-5 text-center">
+  <h1 class="display-4 fw-bold">Sell Anything, Anywhere...</h1>
+  <p class="lead">Online Marketplace for Buying and Selling products, services, and skills</p>
+  <a href="/auth/signup" class="btn btn-primary btn-lg mt-3">Sign-Up</a>
+  <br>
+  <small>sign up to gain access and start selling your products, offering your services and skills</small>
+</div>
+
+<hr class="my-5">
+
+<div class="jumbotron jumbotron-fluid text-light d-flex align-items-center" id="hero">
+  <div class="container text-center">
+    <h1 class="display-4 fw-bold">Launch Your Store</h1>
+    <p class="lead">Start selling instantly with zero setup costs and full control over your listings.</p>
+    <a href="/register" class="btn btn-primary btn-lg mt-3">Get Started</a>
   </div>
-</body>
-</html>
+</div>
+
+<div class="row text-center">
+  <div class="col-md-4">
+    <i class="bi bi-shop-window" style="font-size: 2rem;"></i>
+    <h5 class="mt-3">Launch Your Store</h5>
+    <p>Start selling instantly with zero setup costs and full control over your listings.</p>
+  </div>
+  <div class="col-md-4">
+    <i class="bi bi-laptop" style="font-size: 2rem;"></i>
+    <h5 class="mt-3">Offer Your Skills</h5>
+    <p>Design, teach, consult, code — list your services and connect with buyers directly.</p>
+  </div>
+  <div class="col-md-4">
+    <i class="bi bi-boxes" style="font-size: 2rem;"></i>
+    <h5 class="mt-3">Explore the Marketplace</h5>
+    <p>Discover a wide range of products, services, and talents from individuals and businesses — find the best fit for your needs.</p>
+  </div>
+</div>
+
+<hr class="my-5">
+
+<div class="d-grid gap-3 col-md-6 mx-auto">
+  <a href="/marketplace/view" class="btn btn-outline-dark">Browse Listings</a>
+  <a href="/list" class="btn btn-outline-success">List Your Offer</a>
+  <a href="/dashboard/seller/1" class="btn btn-outline-info">Visit Seller Dashboard</a>
+</div>
+
+<footer class="text-center mt-5 text-muted">
+  <p>Buxxel is built for autonomy. Whether you're an artist, consultant, or entrepreneur — your space starts here.</p>
+</footer>
+{% endblock %}
