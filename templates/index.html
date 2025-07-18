@@ -2,15 +2,24 @@
 {% block title %}Buxxel — Sell Anything, Anywhere{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-center my-4">
-  <img src="https://ik.imagekit.io/mon8rxoqi/buxxel-high-resolution-logo-transparent.png?updatedAt=1752758123893"
-       alt="Buxxel Logo"
-       height="50">
-</div>
 
 <div class="container mt-5 text-center">
-  <h1 class="display-4 fw-bold">Sell Anything, Anywhere...</h1>
-  <p class="lead">Online Marketplace for Buying and Selling products, services, and skills</p>
+ 
+<div class="text-center my-4">
+  <img src="https://ik.imagekit.io/mon8rxoqi/buxxel-high-resolution-logo-transparent.png?updatedAt=1752758123893" alt="Buxxel Logo" height="50" class="mb-2">
+  <div class="small text-light fw-light" style="text-shadow: 0 1px 2px rgba(0,0,0,0.6);">
+    Sell Anything, Anywhere...
+  </div>
+</div>
+  <p class="lead">Buy or Sell products, services, and skills</p>
+</div>
+<style>
+  .carousel-img {
+    height: 400px;
+    object-fit: cover;
+  }
+</style>
+
 <div id="buxxelCarousel" class="carousel slide" data-bs-ride="carousel">
   <!-- Indicators -->
   <div class="carousel-indicators">
@@ -22,14 +31,25 @@
   <!-- Slides -->
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="https://ik.imagekit.io/mon8rxoqi/huy-hung-trinh-zoyBqT7ytLU-unsplash.jpg?updatedAt=1752832625329" class="d-block w-100" alt="Urban skyline at dusk">
-      <p>toys</p>
+      <img src="https://ik.imagekit.io/mon8rxoqi/huy-hung-trinh-zoyBqT7ytLU-unsplash.jpg?updatedAt=1752832625329" class="d-block w-100 carousel-img" alt="Urban skyline at dusk">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Launch Your Store</h5>
+        <p>Start selling instantly with zero setup costs and full control over your listings.</p>
+      </div>
     </div>
     <div class="carousel-item">
-      <img src="https://ik.imagekit.io/mon8rxoqi/arthur-a-aChQ2cYg1ys-unsplash.jpg?updatedAt=1752832718803" class="d-block w-100" alt="Abstract architecture with golden lighting">
+      <img src="https://ik.imagekit.io/mon8rxoqi/arthur-a-aChQ2cYg1ys-unsplash.jpg?updatedAt=1752832718803" class="d-block w-100 carousel-img" alt="Abstract architecture with golden lighting">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Offer Your Skills</h5>
+        <p>Design, teach, consult, code — list your services and connect with buyers directly.</p>
+      </div>
     </div>
     <div class="carousel-item">
-      <img src="https://ik.imagekit.io/mon8rxoqi/i-m-zion-qhnutBbnzOc-unsplash.jpg?updatedAt=1752832790705" class="d-block w-100" alt="Minimalist design with soft tones">
+      <img src="https://ik.imagekit.io/mon8rxoqi/i-m-zion-qhnutBbnzOc-unsplash.jpg?updatedAt=1752832790705" class="d-block w-100 carousel-img" alt="Minimalist design with soft tones">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Explore the Marketplace</h5>
+        <p>Discover products, services, and talents from creators and entrepreneurs worldwide.</p>
+      </div>
     </div>
   </div>
 
@@ -43,11 +63,6 @@
     <span class="visually-hidden">Next</span>
   </button>
 </div>
-  <a href="/auth/signup" class="btn btn-primary btn-lg mt-3">Sign-Up</a>
-  <br>
-  <small>sign up to gain access and start selling your products, offering your services and skills</small>
-</div>
-
 <hr class="my-5">
 
 <div class="hero jumbotron jumbotron-fluid text-light d-flex align-items-center">
@@ -62,6 +77,10 @@
     </div>
   </div>
 </div>
+
+<a href="/auth/signup" class="btn btn-primary btn-lg mt-3">Sign-Up</a>
+  <br>
+  <small>sign up to gain access and start selling your products, offering your services and skills</small>
 
 <div class="row text-center">
   <div class="col-md-4">
