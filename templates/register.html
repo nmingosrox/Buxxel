@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Register - Buxxel{% endblock %}
+{% block content %}
+  <h2 class="text-center mb-4">Register as a Vendor</h2>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <form method="POST">
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          <input type="text" name="username" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input type="password" name="password" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-success w-100">Register</button>
+      </form>
+      <div class="text-center mt-3">
+        <small>Already registered? <a href="{{ url_for('login') }}">Log in here</a></small>
+      </div>
+    </div>
+  </div>
+{% endblock %}

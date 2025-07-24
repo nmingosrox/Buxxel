@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}
+Buxxel – Sell Anything, Anywhere
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero" style="text-align:center; padding:60px 20px; background:#f0f4f8;">
+  <h1 style="font-size:3em; margin-bottom:0.3em;">Sell Anything, Anywhere</h1>
+  <p style="font-size:1.2em; color:#555;">Buxxel empowers you to showcase your products, services, or ideas to the world — seamlessly and securely.</p>
+  <a href="{{ url_for('register') }}" class="btn" style="margin-top:20px; padding:12px 24px; background:#005BBB; color:#fff; border-radius:5px; text-decoration:none;">Get Started</a>
+</section>
+
+<!-- Features -->
+<section class="features" style="padding:40px 20px; display:flex; justify-content:space-around; background:#fff;">
+  <div class="feature" style="max-width:300px; text-align:center;">
+    <h2>🌍 Global Reach</h2>
+    <p>Break down boundaries and sell to anyone, anywhere in the world.</p>
+  </div>
+  <div class="feature" style="max-width:300px; text-align:center;">
+    <h2>🛠️ Easy Setup</h2>
+    <p>Launch your store or portfolio in minutes — no tech skills required.</p>
+  </div>
+  <div class="feature" style="max-width:300px; text-align:center;">
+    <h2>🔐 Trusted & Secure</h2>
+    <p>Your customers and data are protected with enterprise-grade security.</p>
+  </div>
+</section>
+
+<!-- About -->
+<section class="about" style="padding:60px 20px; background:#f9f9f9; text-align:center;">
+  <h2>About Buxxel</h2>
+  <p style="max-width:600px; margin:auto; color:#444;">
+    At Buxxel, we believe entrepreneurship should be borderless. Whether you’re an artist, merchant, developer, or dreamer — we give you the tools to sell anything, anywhere. Build your digital storefront, connect with your audience, and grow fearlessly.
+  </p>
+</section>
+
+<section class="featured-products my-5">
+  <h2 class="text-center mb-4">Featured Listings</h2>
+  <div class="d-flex flex-wrap justify-content-center gap-4">
+    {% for product in featured_products %}
+      {% include '_product_card.html' %}
+    {% endfor %}
+  </div>
+</section>
+
+
+<!-- Testimonials -->
+<section class="testimonials" style="padding:40px 20px; background:#fff;">
+  <h2 style="text-align:center;">What Our Users Say</h2>
+  <div style="max-width:600px; margin:30px auto; font-style:italic; color:#333;">
+    “Buxxel helped me take my handmade goods from Windhoek to the world!” – Lindi M., Artisan
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="contact" style="padding:40px 20px; background:#f0f0f0;">
+  <h2 style="text-align:center;">Let's Connect</h2>
+  <form action="/contact" method="post" style="max-width:600px; margin:auto; display:flex; flex-direction:column; gap:12px;">
+    <input type="text" name="name" placeholder="Your Name" required style="padding:10px;">
+    <input type="email" name="email" placeholder="Email Address" required style="padding:10px;">
+    <textarea name="message" placeholder="Your Message" rows="4" required style="padding:10px;"></textarea>
+    <button type="submit" style="padding:10px; background:#005BBB; color:#fff; border:none;">Send</button>
+  </form>
+</section>
+
+<!-- Footer -->
+<footer style="padding:20px; text-align:center; background:#222; color:#fff;">
+  <p>&copy; {{ current_year }} Buxxel. All rights reserved.</p>
+  <div style="margin-top:10px;">
+    <a href="/about" style="color:#bbb; margin:0 10px;">About</a>
+    <a href="/privacy" style="color:#bbb; margin:0 10px;">Privacy</a>
+    <a href="/contact" style="color:#bbb; margin:0 10px;">Contact</a>
+  </div>
+</footer>
+{% endblock %}

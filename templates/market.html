@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}
+Marketplace – Buxxel
+{% endblock %}
+
+{% block content %}
+<h2 class="text-center my-4">Explore Products from Around the World</h2>
+
+<!-- Filter Section -->
+<form method="GET" class="row mb-4 justify-content-center">
+  <div class="col-md-3">
+    <input type="text" name="query" class="form-control" placeholder="Search products..." value="{{ request.args.get('query', '') }}">
+  </div>
+  <div class="col-md-2">
+    <select name="category" class="form-select">
+      <option value="">All Categories</option>
+      <!-- Dynamically load categories -->
+    </select>
+  </div>
+  <div class="col-md-2">
+    <select name="price" class="form-select">
+      <option value="">Any Price</option>
+      <option value="low" {% if request.args.get('price') == 'low' %}selected{% endif %}>Under $50</option>
+      <option value="med" {% if request.args.get('price') == 'med' %}selected{% endif %}>$50–$200</option>
+      <option value="high" {% if request.args.get('price') == 'high' %}selected{% endif %}>Over $200</option>
+    </select>
+  </div>
+  <div class="col-md-1">
+    <button type="submit" class="btn btn-primary w-100">Filter</button>
+  </div>
+</form>
+
+<!-- Filter Feedback -->
+<div class="text-center mb-2 text-muted">
+  {% if request.args %}
+    <p>
+      Showing filtered results
+      {% if request.args.get('query') %} | Search: <strong>{{ request.args.get('query') }}</strong>{% endif %}
+      {% if request.args.get('category') %} | Category: <strong>{{ request.args.get('category') }}</strong>{% endif %}
+      {% if request.args.get('price') %} | Price: <strong>{{ request.args.get('price') }}</strong>{% endif %}
+      <br>
+      <a href="{{ url_for('market') }}" class="btn btn-sm btn-outline-secondary mt-2">Clear Filters</a>
+    </p>
+  {% else %}
+    <p>Showing all available products.</p>
+  {% endif %}
+</div>
+
+<!-- Product Grid -->
+<div class="product-grid row justify-content-center gap-4">
+  {% for product in products %}
+    {% include '_product_market_card.html' %}
+  {% else %}
+    <p class="text-muted text-center w-100 mt-4">No matching products found.</p>
+  {% endfor %}
+</div>
+
+<!-- Pagination (optional) -->
+<div class="d-flex justify-content-center mt-4">
+  <!-- Add pagination links here -->
+</div>
+{% endblock %}

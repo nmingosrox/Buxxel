@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard – Buxxel
+{% endblock %}
+
+{% block content %}
+<h2 class="mb-4 text-center">Manage Your Products</h2>
+
+<!-- Product Creation Form -->
+<h3 class="text-center">add a new listing</h3>
+<form method="POST" enctype="multipart/form-data" class="mb-4">
+  <div class="row g-2">
+    <div class="col-md-3">
+      <input type="text" name="name" class="form-control" placeholder="Product Name" required>
+    </div>
+    <div class="col-md-2">
+      <input type="text" name="price" class="form-control" placeholder="Price" required>
+    </div>
+    <div class="col-md-4">
+      <input type="text" name="description" class="form-control" placeholder="Description" required>
+    </div>
+    <div class="col-md-2">
+      <input type="file" name="image" class="form-control" required>
+    </div>
+    <div class="col-md-1">
+      <button type="submit" class="btn btn-success w-100">Add</button>
+    </div>
+  </div>
+</form>
+
+<!-- Product Grid -->
+<div class="product-grid d-flex flex-wrap justify-content-center gap-4">
+  {% for product in products %}
+    {% include '_product_card.html' %}
+  {% else %}
+    <p class="text-muted text-center w-100 mt-4">No products yet. Add your first one above!</p>
+  {% endfor %}
+</div>
+{% endblock %}
