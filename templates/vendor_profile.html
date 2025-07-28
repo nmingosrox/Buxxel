@@ -1,0 +1,51 @@
+<div class="container my-5">
+  <h2>{{ vendor.username }}’s Vendor Profile</h2>
+
+  {% if vendor.avatar %}
+    <img src="{{ url_for('static', filename='images/vendor_avatars/' + vendor.avatar) }}" alt="Vendor Avatar" class="img-thumbnail mb-3" width="100">
+  {% endif %}
+
+  <p><strong>Location:</strong> {{ vendor.location or 'Not provided' }}</p>
+  <p><strong>Bio:</strong> {{ vendor.bio or 'No bio available' }}</p>
+  <p><strong>Status:</strong>
+    {% if vendor.is_available_for_commissions %}
+      <span class="text-success">Available for commissions ✅</span>
+    {% else %}
+      <span class="text-muted">Not accepting new projects</span>
+    {% endif %}
+  </p>
+
+  <p><strong>Average Rating:</strong>
+    {% if vendor.average_rating %}
+      ⭐ {{ vendor.average_rating }} / 5 ({{ vendor.rating_count }} ratings)
+    {% else %}
+      Not yet rated
+    {% endif %}
+  </p>
+
+  <p><strong>Total Products:</strong> {{ total_products }}</p>
+  <p><strong>Average Price:</strong> ${{ avg_price }}</p>
+
+  <p><strong>Share My Profile:</strong>
+    <a href="{{ url_for('vendor_profile', vendor_id=vendor.id, _external=True) }}" target="_blank">
+      {{ url_for('vendor_profile', vendor_id=vendor.id, _external=True) }}
+    </a>
+  </p>
+
+  <hr>
+  <h4>Products</h4>
+  <div class="row">
+    {% for product in products %}
+      <div class="col-md-4 mb-3">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text">${{ product.price }}</p>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <p>No products available.</p>
+    {% endfor %}
+  </div>
+</div>

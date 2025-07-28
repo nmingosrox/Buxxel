@@ -200,6 +200,60 @@ def product_detail(product_id):
     product = Product.query.get_or_404(product_id)
     return render_template("product_detail.html", product=product)
 
+@app.route('/vendor/<int:vendor_id>')
+def vendor_profile(vendor_id):
+    vendor = Vendor.query.get_or_404(vendor_id)
+    vendor_products = Product.query.filter_by(vendor_id=vendor.id).all()
+    total_sales = Order.query.filter_by(vendor_id=vendor.id).count()
+
+    # Optional: calculate stats
+    total_products = len(vendor_products)
+    avg_price = round(sum([p.price for p in vendor_products]) / total_products, 2) if total_products else 0
+
+    return render_template('vendor_profile.html',
+                           vendor=vendor,
+                           products=vendor_products,
+                           total_products=total_products,
+                           avg_price=avg_price)
+
+@app.route('/vendors')
+def vendor_directory():
+    query = request.args.get('q', '')
+    if query:
+        vendors = Vendor.query.filter(Vendor.username.ilike(f"%{query}%")).all()
+    else:
+        vendors = Vendor.query.all()
+    return render_template('vendor_directory.html', vendors=vendors, query=query)
+
+@app.route('/vendor/settings', methods=['GET', 'POST'])
+def vendor_settings():
+    vendor_id = session.get('vendor_id')
+    if not vendor_id:
+        return redirect(url_for('login'))
+
+    vendor = Vendor.query.get_or_404(vendor_id)
+
+    if request.method == 'POST':
+        vendor.location = request.form.get('location')
+        vendor.bio = request.form.get('bio')
+        vendor.is_available_for_commissions = bool(request.form.get('is_available_for_commissions'))
+
+
+        # Handle avatar upload
+        avatar_file = request.files.get('avatar')
+        if avatar_file and avatar_file.filename:
+            filename = secure_filename(avatar_file.filename)
+            avatar_path = os.path.join(app.config['UPLOAD_FOLDER'], 'vendor_avatars', filename)
+            avatar_file.save(avatar_path)
+            vendor.avatar = filename
+
+        db.session.commit()
+        flash("Profile updated successfully!", "success")
+        return redirect(url_for('vendor_settings'))
+
+    return render_template("vendor_settings.html", vendor=vendor)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

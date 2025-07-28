@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Vendor Settings – Buxxel{% endblock %}
+{% block content %}
+<div class="container my-5">
+  <h2>Edit Your Vendor Profile</h2>
+  <form method="POST" enctype="multipart/form-data" class="row g-3">
+    <div class="col-md-6">
+      <label for="location" class="form-label">Location</label>
+      <input type="text" name="location" class="form-control" value="{{ vendor.location }}">
+    </div>
+    <div class="col-md-6">
+      <label for="avatar" class="form-label">Avatar</label>
+      <input type="file" name="avatar" class="form-control">
+      {% if vendor.avatar %}
+        <img src="{{ url_for('static', filename='images/vendor_avatars/' + vendor.avatar) }}" alt="Current Avatar" class="mt-2" width="80">
+      {% endif %}
+    </div>
+    <div class="col-md-12">
+      <label for="bio" class="form-label">Bio</label>
+      <textarea name="bio" class="form-control" rows="4">{{ vendor.bio }}</textarea>
+    </div>
+    <div class="col-md-6">
+  <label class="form-label">Available for Commissions</label>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" name="is_available_for_commissions" {% if vendor.is_available_for_commissions %}checked{% endif %}>
+    <label class="form-check-label">Yes, I’m open to new projects</label>
+  </div>
+</div>
+
+<p><strong>Shareable Link:</strong> 
+  <a href="{{ url_for('view_vendor_profile', vendor_id=vendor.id, _external=True) }}" target="_blank">
+    {{ url_for('view_vendor_profile', vendor_id=vendor.id, _external=True) }}
+  </a>
+</p>
+
+
+<div class="col-12 mt-4">
+  <h5>Live Profile Preview</h5>
+  <div class="border p-3 rounded">
+    <p><strong>Location:</strong> {{ vendor.location }}</p>
+    <p><strong>Bio:</strong> {{ vendor.bio }}</p>
+    {% if vendor.avatar %}
+      <img src="{{ url_for('static', filename='images/vendor_avatars/' + vendor.avatar) }}" alt="Avatar" class="img-thumbnail" width="80">
+    {% endif %}
+    <p><strong>Status:</strong>
+      {% if vendor.is_available_for_commissions %}
+        <span class="text-success">Available for commissions ✅</span>
+      {% else %}
+        <span class="text-muted">Not accepting new projects</span>
+      {% endif %}
+    </p>
+  </div>
+</div>
+
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

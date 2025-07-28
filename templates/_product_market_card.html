@@ -14,10 +14,8 @@
 
     <!-- Vendor Footer -->
     <div class="card-footer text-muted small text-end">
-      Listed by <strong>{{ product.vendor.username }}</strong>
-      {% if product.vendor.location %}
-        <span class="d-block">📍 {{ product.vendor.location }}</span>
-      {% endif %}
-    </div>
+  Listed by <a href="{{ url_for('vendor_profile', vendor_id=product.vendor.id) }}">{{ product.vendor.username }}</a>
+</div>
+
   </div>
 </div>
