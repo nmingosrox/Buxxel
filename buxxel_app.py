@@ -1,11 +1,25 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash, get_flashed_messages
-from models import db, Product, Vendor
+from models import db, Product, Vendor, Order
 import os
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_migrate import Migrate
+import flask_profiler
 
 app = Flask(__name__)
+
+app.config["flask_profiler"] = {
+    "enabled": app.config["DEBUG"],
+    "storage": {
+        "engine": "sqlite"
+    },
+    "basicAuth": {
+        "enabled": True,
+        "username": "admin",
+        "password": "admin"
+    },
+    "ignore": ["^/static/.*"]
+}
 
 # Configuration
 app.secret_key = 'your_secret_key_here'
@@ -19,6 +33,9 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 db.init_app(app)
 migrate = Migrate(app, db)
+
+
+flask_profiler.init_app(app)
 
 @app.route('/')
 def index():
