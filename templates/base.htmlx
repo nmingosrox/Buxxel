@@ -33,6 +33,7 @@
 .navbar {
   background-color: rgba(242, 245, 250, 0.8); /* 80% opacity */
 }
+
 </style>
 </head>
 <body>

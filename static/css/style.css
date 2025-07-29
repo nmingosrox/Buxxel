@@ -1,0 +1,89 @@
+.hero-section {
+  min-height: 30vh;
+  background: linear-gradient(135deg, #dce6f2, #fbf5fa, #cbd8ec);
+  position: relative;
+  border-radius:8px;
+}
+
+.spinning-globe {
+  display: inline-block;
+  animation: spinGlobe 4s linear infinite;
+}
+
+@keyframes spinGlobe {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.spinning-globe {
+  display: inline-block;
+  animation: spinGlobe 4s linear infinite;
+}
+
+.globe-spin {
+  width: 48px;
+  height: 48px;
+  animation: spinHorizontal 6s linear infinite;
+  transform-origin: center;
+}
+
+@keyframes spinHorizontal {
+  0%   { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
+}
+
+@keyframes spinGlobe {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.tagline {
+  font-size: 1.6rem;
+  color: #5f6f84;
+}
+
+.hero-section.scrolled .tagline {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toggler-icon {
+  display: inline-block;
+  position: relative;
+  width: 30px;
+  height: 22px;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.toggler-icon span {
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  background: #333;
+  left: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.toggler-icon span:nth-child(1) {
+  top: 0;
+}
+.toggler-icon span:nth-child(2) {
+  top: 9px;
+}
+.toggler-icon span:nth-child(3) {
+  top: 18px;
+}
+
+/* When active, morph into X */
+.menu-toggle-active .toggler-icon span:nth-child(1) {
+  transform: rotate(45deg);
+  top: 9px;
+}
+.menu-toggle-active .toggler-icon span:nth-child(2) {
+  opacity: 0;
+}
+.menu-toggle-active .toggler-icon span:nth-child(3) {
+  transform: rotate(-45deg);
+  top: 9px;
+}

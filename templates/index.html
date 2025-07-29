@@ -5,35 +5,89 @@ Buxxel – Sell Anything, Anywhere
 {% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
-<section class="hero py-5 px-3 text-center bg-light">
-  <p class="lead text-muted mb-4">Buxxel global marketplace platform</p>
 
+<style>
+.hero-title {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease-out;
+}
+
+.hero-title.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-text{
+  font-size:0.75rem;
+}
+</style>
+
+<!-- Hero Section -->
+<section class="rounded-lg hero-section d-flex flex-column justify-content-center align-items-center text-center">
+  <h3 class="tagline display-3">Global Marketplace Platform</h3>
   <div class="row justify-content-center">
-    <div class="col-12 col-md-auto mb-2 mb-md-0">
-      <a href="{{ url_for('register') }}"
-         class="btn btn-primary px-4 py-2">
-         Start Selling Free
+    <p class="lead small text-muted hero-text">Offer products for people to buy, talents and skills for hire or design a production pipeline to create products and services you can instantly monetize with Buxxel</p>
+    <div class="col-12 col-md-auto mb-2">
+      <a href="{{ url_for('register') }}" class="btn btn-outline-dark px-4 py-2">
+        Start Selling Free
       </a>
     </div>
     <div class="col-12 col-md-auto">
-      <a href="{{ url_for('register') }}"
-         class="btn btn-success px-4 py-2">
-         Explore Marketplace
+      <a href="{{ url_for('register') }}" class="btn btn-outline-secondary text-muted px-4 py-2">
+        Explore Marketplace
       </a>
     </div>
   </div>
 </section>
 
+<style>
+  .globe-wrapper {
+    width: 200px;
+    height: 200px;
+    perspective: 800px;
+  }
 
-<section class="features py-5 bg-white">
+  .globe {
+    width: 100%;
+    height: 100%;
+    animation: spin 10s linear infinite;
+    transform-style: preserve-3d;
+  }
+
+  @keyframes spin {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(360deg); }
+  }
+</style>
+
+<div class="globe-wrapper">
+  <svg class="globe" viewBox="0 0 200 200">
+    <defs>
+      <radialGradient id="ocean" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#4fc3f7"/>
+        <stop offset="100%" stop-color="#0288d1"/>
+      </radialGradient>
+    </defs>
+    <circle cx="100" cy="100" r="95" fill="url(#ocean)" />
+    <!-- Stylized continents (approximate for visual) -->
+    <path d="M70,90 Q80,70 100,85 Q110,100 90,110 Q80,105 70,90" fill="#81c784"/>
+    <path d="M120,60 Q140,80 130,100 Q110,95 120,60" fill="#81c784"/>
+    <!-- Add more decorative paths or points as needed -->
+  </svg>
+</div>
+
+<section class=" features py-5 bg-white">
   <div class="container">
     <div class="row justify-content-center text-center">
       <div class="col-12 col-md-5 mb-4 mb-md-0">
         <div class="feature px-3">
-          <h2>🌍 Global Reach</h2>
-          <p class="text-muted">Break down boundaries and connect with clients globally.</p>
-        </div>
+<h2>
+ <div class="globe-container">
+  <img src="https://ik.imagekit.io/mon8rxoqi/vecteezy_world-globe-vector-icon-design_25177112.svg?updatedAt=1753806760060" alt="Spinning Globe" class="globe-spin" /> Global Reach
+</div>
+</h2>       
+ </div>
       </div>
       <div class="col-12 col-md-5">
         <div class="feature px-3">
@@ -124,4 +178,12 @@ Buxxel – Sell Anything, Anywhere
     <a href="/contact" style="color:#bbb; margin:0 10px;">Contact</a>
   </div>
 </footer>
+<script>
+const title = document.querySelector('.hero-title');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 50) {
+    title.classList.add('visible');
+  }
+});
+</script>
 {% endblock %}
