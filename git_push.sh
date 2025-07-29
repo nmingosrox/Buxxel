@@ -10,4 +10,4 @@ git add .
 git commit -m "$message"
 
 # Push to GitHub
-git push origin main
+git push origin master
