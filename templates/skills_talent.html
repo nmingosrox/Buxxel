@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container py-5">
+  <h2 class="text-center mb-3">🎨 Showcase of Skills & Talents</h2>
+  <p class="text-center text-muted mb-5">Explore creators, innovators, and experts ready to collaborate.</p>
+
+  <div class="row">
+    {% for talent in talents %}
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="position-relative">
+            <img src="{{ url_for('static', filename=talent.avatar) }}" class="card-img-top" alt="{{ talent.name }}">
+            {% if talent.featured_work %}
+              <span class="position-absolute top-0 end-0 badge bg-info text-dark m-2">Featured</span>
+            {% endif %}
+          </div>
+
+          <div class="card-body">
+            <h5 class="card-title">{{ talent.name }}</h5>
+            <span class="badge bg-secondary mb-2">{{ talent.category }}</span>
+            <p class="card-text">{{ talent.bio[:100] }}...</p>
+
+            {% if talent.featured_work %}
+              <img src="{{ url_for('static', filename=talent.featured_work) }}" class="img-fluid rounded mt-2" alt="Sample work">
+            {% endif %}
+
+            <a href="{{ url_for('talent_profile', talent_id=talent.id) }}" class="btn btn-outline-primary w-100 mt-3">View Full Profile</a>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <p class="text-center">No talent profiles available yet — be the first to shine ✨</p>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

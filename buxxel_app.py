@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash, get_flashed_messages
-from models import db, Product, Vendor, Order
+from models import db, Product, Vendor, Order, Talent
 import os
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -99,6 +99,16 @@ def delete_product(product_id):
     db.session.delete(product)
     db.session.commit()
     return redirect(url_for('dashboard'))
+
+@app.route('/vendors')
+def vendors():
+    vendors = vendors = Vendor.query.all()
+    return render_template('vendors.html', vendors=vendors)
+
+@app.route('/skills')
+def skills():
+    talents = Talent.query.order_by(Talent.name.asc()).all()
+    return render_template('skills_talent.html', talents=talents)
 
 @app.route('/edit/<int:product_id>', methods=['GET', 'POST'])
 def edit_product(product_id):
@@ -263,6 +273,28 @@ def vendor_settings():
         return redirect(url_for('vendor_settings'))
 
     return render_template("vendor_settings.html", vendor=vendor)
+
+@app.route('/build')
+def build_project():
+    all_talents = Talent.query.all()
+    all_products = Product.query.all()
+    return render_template('build.html', talents=all_talents, products=all_products)
+
+@app.route('/build', methods=['POST'])
+def submit_project():
+    title = request.form.get('title')
+    description = request.form.get('description')
+    talent_ids = request.form.getlist('talents')
+    product_ids = request.form.getlist('products')
+    
+    project = ProjectBuild(title=title, description=description, creator_id=session['user_id'])
+    project.talents = Talent.query.filter(Talent.id.in_(talent_ids)).all()
+    project.products = Product.query.filter(Product.id.in_(product_ids)).all()
+
+    db.session.add(project)
+    db.session.commit()
+    flash("Project created successfully!", "success")
+    return redirect(url_for('dashboard'))
 
 with app.app_context():
     db.create_all()

@@ -29,6 +29,12 @@
 <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
 
 {% block head %}{% endblock %}
+<style>
+.navbar {
+  background-color: rgba(50, 50, 50, 0.25); /* black with 50% opacity */
+  color: white; /* keeps text readable */
+}
+</style>
 </head>
 <body>
 
@@ -48,12 +54,22 @@
         <ul class="navbar-nav ms-auto">
           {% if session.get('vendor_id') %}
             <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+<hr>           
+ <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+<hr>
           {% else %}
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Register</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+<hr>    
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Register</a></li>
+<hr>  
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('vendors') }}">Vendors</a></li>
+<hr>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('skills') }}">Talents and Skills</a></li>
+<hr>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('build_project') }}">Build A Product</a></li> 
           {% endif %}
-          <li class="nav-item">
+<hr>  
+        <li class="nav-item">
   <a class="nav-link" href="{{ url_for('market') }}">Marketplace</a>
 </li>
         </ul>

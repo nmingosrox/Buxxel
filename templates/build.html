@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container py-5">
+  <h2 class="text-center mb-4">🛠️ Build Your Custom Service or Product</h2>
+  <form method="POST" action="{{ url_for('submit_project') }}">
+
+    <div class="mb-3">
+      <label for="title" class="form-label">Project Title</label>
+      <input type="text" name="title" class="form-control" placeholder="e.g. Custom Sofa Build">
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label">Project Description</label>
+      <textarea name="description" class="form-control" rows="4" placeholder="Describe what you want created..."></textarea>
+    </div>
+
+    <h5 class="mt-4">🎨 Choose Talents</h5>
+    <div class="row">
+      {% for talent in talents %}
+        <div class="col-md-4 mb-2">
+          <label class="form-check-label d-block border p-2">
+            <input type="checkbox" name="talents" value="{{ talent.id }}"> {{ talent.name }} — {{ talent.category }}
+          </label>
+        </div>
+      {% endfor %}
+    </div>
+
+    <h5 class="mt-4">📦 Choose Products</h5>
+    <div class="row">
+      {% for product in products %}
+        <div class="col-md-4 mb-2">
+          <label class="form-check-label d-block border p-2">
+            <input type="checkbox" name="products" value="{{ product.id }}"> {{ product.title }}
+          </label>
+        </div>
+      {% endfor %}
+    </div>
+
+    <button class="btn btn-success w-100 mt-4">Create Project</button>
+  </form>
+</div>
+
+{% endblock %}

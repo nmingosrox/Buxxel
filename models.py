@@ -41,3 +41,37 @@ class Order(db.Model):
     vendor_id = db.Column(db.Integer, db.ForeignKey('vendor.id'))
     quantity = db.Column(db.Integer)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+class Talent(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80))
+    bio = db.Column(db.Text)
+    avatar = db.Column(db.String(120))
+    category = db.Column(db.String(50))
+    featured_work = db.Column(db.String(120))
+
+class ProjectBuild(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(120))
+    description = db.Column(db.Text)
+    creator_id = db.Column(db.Integer, db.ForeignKey('vendor.id'))
+
+    # Many-to-many with Talents
+    talents = db.relationship('Talent', secondary='project_talent', backref='projects')
+
+    # Many-to-many with Products
+    products = db.relationship('Product', secondary='project_product', backref='projects')
+
+    status = db.Column(db.String(20), default='draft')  # draft, published
+    preview_image = db.Column(db.String(120))
+
+project_talent = db.Table('project_talent',
+    db.Column('project_id', db.Integer, db.ForeignKey('project_build.id')),
+    db.Column('talent_id', db.Integer, db.ForeignKey('talent.id'))
+)
+
+project_product = db.Table('project_product',
+    db.Column('project_id', db.Integer, db.ForeignKey('project_build.id')),
+    db.Column('product_id', db.Integer, db.ForeignKey('product.id'))
+)

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container my-5">
+  <h2 class="text-center mb-4">🌟 Featured Vendors</h2>
+  
+  <div class="row">
+    {% for vendor in vendors %}
+      <div class="col-md-4 mb-4">
+        <div class="card shadow-sm h-100">
+         
+          <div class="card-body">
+            <h5 class="card-title">{{ vendor.name }}</h5>
+            <p class="card-text text-muted">{{ vendor.bio or "No bio available yet." }}</p>
+
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <span class="badge bg-success">Rating: {{ vendor.rating }}/5</span>
+              {% if vendor.commission_status == 'verified' %}
+                <span class="badge bg-info text-dark">✅ Verified</span>
+              {% else %}
+                <span class="badge bg-secondary">⏳ Pending</span>
+              {% endif %}
+            </div>
+
+            <a href="{{ url_for('vendor_profile', vendor_id=vendor.id) }}" class="btn btn-primary w-100 mt-3">View Profile</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}
