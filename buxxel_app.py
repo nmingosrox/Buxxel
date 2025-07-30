@@ -4,22 +4,9 @@ import os
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_migrate import Migrate
-import flask_profiler
 
 app = Flask(__name__)
 
-app.config["flask_profiler"] = {
-    "enabled": app.config["DEBUG"],
-    "storage": {
-        "engine": "sqlite"
-    },
-    "basicAuth": {
-        "enabled": True,
-        "username": "admin",
-        "password": "admin"
-    },
-    "ignore": ["^/static/.*"]
-}
 
 # Configuration
 app.secret_key = 'your_secret_key_here'
@@ -33,9 +20,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 db.init_app(app)
 migrate = Migrate(app, db)
-
-
-flask_profiler.init_app(app)
 
 @app.route('/')
 def index():
@@ -152,24 +136,40 @@ def autocomplete():
     suggestions = Product.query.filter(Product.name.ilike(f'%{query}%')).limit(10).all()
     return jsonify([product.name for product in suggestions])
 
-
-
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        username = request.form['username']
-        existing_vendor = Vendor.query.filter_by(username=username).first()
+        username = request.form.get('username')
+        password_raw = request.form.get('password')
 
-        if existing_vendor:
-            flash("Username already exists. Please choose a different one.")
+        # Validate required fields
+        if not username or not password_raw:
+            flash("Username and password are required.", "warning")
             return redirect(url_for('register'))
 
-        password = generate_password_hash(request.form['password'])
+        # Check for duplicates
+        existing_vendor = Vendor.query.filter_by(username=username).first()
+        if existing_vendor:
+            flash("Username already exists. Please choose a different one.", "danger")
+            return redirect(url_for('register'))
+
+        # Hash password securely
+        password = generate_password_hash(password_raw)
+
+        # Create vendor instance
         vendor = Vendor(username=username, password=password)
+
+        # Optional: Handle avatar upload
+        avatar = request.files.get('avatar')
+        if avatar and avatar.filename:
+            filename = secure_filename(avatar.filename)
+            avatar.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            vendor.avatar = f"images/avatars/{filename}"
+
         db.session.add(vendor)
         db.session.commit()
 
-        flash('Registration successful. Please log in.')
+        flash("Registration successful. Please log in.", "success")
         return redirect(url_for('login'))
 
     return render_template('register.html')
