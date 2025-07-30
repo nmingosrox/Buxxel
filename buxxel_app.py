@@ -21,10 +21,32 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 db.init_app(app)
 migrate = Migrate(app, db)
 
+@app.route('/admin')
+def admin_dashboard():
+    vendors = Vendor.query.order_by(Vendor.username.asc()).all()
+    return render_template('admin_dashboard.html', vendors=vendors)
+
+@app.route('/admin/toggle/<int:vendor_id>')
+def toggle_featured(vendor_id):
+    vendor = Vendor.query.get_or_404(vendor_id)
+    vendor.is_featured = not vendor.is_featured
+    db.session.commit()
+    flash("Vendor featured status updated.", "success")
+    return redirect(url_for('admin_dashboard'))
+
+@app.route('/admin/delete/<int:vendor_id>')
+def delete_vendor(vendor_id):
+    vendor = Vendor.query.get_or_404(vendor_id)
+    db.session.delete(vendor)
+    db.session.commit()
+    flash("Vendor deleted.", "danger")
+    return redirect(url_for('admin_dashboard'))
+
 @app.route('/')
 def index():
     products = Product.query.all()
-    return render_template('index.html', products=products)
+    vendor = Vendor.query.all()
+    return render_template('index.html', products=products, vendor=vendor)
 
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():

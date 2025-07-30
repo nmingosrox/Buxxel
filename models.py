@@ -12,6 +12,7 @@ class Vendor(db.Model):
     bio = db.Column(db.Text)
     avatar = db.Column(db.String(120))  # filename of avatar image
     is_available_for_commissions = db.Column(db.Boolean, default=True)
+    is_featured = db.Column(db.Boolean, default=False)
 
 
 class Product(db.Model):

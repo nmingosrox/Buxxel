@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container py-5">
+  <h2 class="mb-4 text-center">🛡️ Buxxel Admin Dashboard</h2>
+
+  <h4>🔍 Registered Vendors</h4>
+  <table class="table table-striped">
+    <thead>
+      <tr><th>Username</th><th>Email</th><th>Featured</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+      {% for vendor in vendors %}
+      <tr>
+        <td>{{ vendor.username }}</td>
+        <td>{{ vendor.email }}</td>
+        <td>{% if vendor.is_featured %}✅{% else %}❌{% endif %}</td>
+        <td>
+          <a href="{{ url_for('toggle_featured', vendor_id=vendor.id) }}" class="btn btn-sm btn-info">Toggle Featured</a>
+          <a href="{{ url_for('delete_vendor', vendor_id=vendor.id) }}" class="btn btn-sm btn-danger">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
