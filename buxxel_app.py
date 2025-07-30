@@ -21,6 +21,11 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 db.init_app(app)
 migrate = Migrate(app, db)
 
+@app.route('/admin/products')
+def admin_products():
+    products = Product.query.order_by(Product.created_at.desc()).all()
+    return render_template('admin_products.html', products=products)
+
 @app.route('/admin')
 def admin_dashboard():
     vendors = Vendor.query.order_by(Vendor.username.asc()).all()
@@ -45,8 +50,8 @@ def delete_vendor(vendor_id):
 @app.route('/')
 def index():
     products = Product.query.all()
-    vendor = Vendor.query.all()
-    return render_template('index.html', products=products, vendor=vendor)
+    featured_vendors = Vendor.query.filter_by(is_featured=True).limit(6).all()
+    return render_template('index.html', products=products, featured_vendors=featured_vendors)
 
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():

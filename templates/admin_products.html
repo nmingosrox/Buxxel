@@ -1,0 +1,18 @@
+<table class="table table-hover">
+  <thead>
+    <tr><th>Title</th><th>Vendor</th><th>Status</th><th>Actions</th></tr>
+  </thead>
+  <tbody>
+    {% for product in products %}
+    <tr>
+      <td>{{ product.title }}</td>
+      <td>{{ product.vendor.username }}</td>
+      <td>{{ product.status }}</td>
+      <td>
+        <a href="{{ url_for('toggle_product_status', product_id=product.id) }}" class="btn btn-sm btn-info">Toggle Status</a>
+        <a href="{{ url_for('delete_product', product_id=product.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
