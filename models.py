@@ -28,10 +28,7 @@ class Product(db.Model):
 
     vendor_id = db.Column(db.Integer, db.ForeignKey('vendor.id'))
     vendor = db.relationship('Vendor', backref='products')
-
-    def __repr__(self):
-        return f'<Product {self.name}>'
-
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return f'<Product {self.name}>'
