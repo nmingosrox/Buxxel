@@ -1,9 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
 
-# 🔗 Create the SQLAlchemy instance
 db = SQLAlchemy()
 
-# 📦 Import model classes
-from .purveyor import Purveyor
-from .product import Product
-# Add other models as needed, e.g. from .build import Build
+# Lazy imports — models can access this without redefining db
+from db.purveyor_model import Purveyor
+from db.product_model import Product
+from db.market_model import Order

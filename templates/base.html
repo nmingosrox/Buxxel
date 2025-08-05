@@ -40,43 +40,58 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-md navbar-light sticky-top">
     <div class="container-fluid">
-      <a class="navbar-brand d-flex align-items-center" href="{{ url_for('index') }}">
+      <a class="navbar-brand d-flex align-items-center" href="{{ url_for('global_bp.index') }}">
         <img src="https://ik.imagekit.io/mon8rxoqi/buxxel-high-resolution-logo-transparent.png?updatedAt=1752758123893" alt="Buxxel Logo" width="80" height="20" class="me-2">
-
       </a>
-<button class="navbar-toggler" type="button" id="menuToggle" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-  <span class="toggler-icon">
-    <span></span>
-    <span></span>
-    <span></span>
-  </span>
-</button>
-
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
+      <button class="navbar-toggler" type="button" id="menuToggle" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="toggler-icon">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+           <!-- Dashboard -->  
           {% if session.get('vendor_id') %}
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('purveyor_bp.dashboard') }}">Dashboard</a>
+            </li>
 <hr>           
- <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+           <!-- Logout -->  
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('global_bp.logout') }}">Logout</a>
+            </li>
 <hr>
+           <!-- Login -->  
           {% else %}
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('global_bp.login') }}">Login</a>
+            </li>
 <hr>    
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Register</a></li>
-<hr>  
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('vendors') }}">Vendors</a></li>
+           <!-- Register -->  
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('global_bp.register') }}">Register</a>
+            </li>
 <hr>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('skills') }}">Talents and Skills</a></li>
+           <!-- Purveyors -->  
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('market.purveyors_list') }}">Purveyors</a
+            </li>
 <hr>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('build_project') }}">Build A Product</a></li> 
-          {% endif %}
-<hr>  
-        <li class="nav-item">
-  <a class="nav-link" href="{{ url_for('market') }}">Marketplace</a>
-</li>
+           <!-- Build a product -->
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('market.build_project') }}">Build A Product</a
+            </li> 
+            {% endif %}
+<hr>
+           <!-- Marketplace -->
+           <li class="nav-item">
+             <a class="nav-link" href="{{ url_for('market.market') }}">Marketplace</a>
+           </li>
         </ul>
         {% if session.get('vendor_username') %}
-          <span class="navbar-text text-light ms-2">Logged in as: {{ session['vendor_username'] }}</span>
+        <span class="navbar-text text-light ms-2">Logged in as: {{ session['vendor_username'] }}</span>
         {% endif %}
       </div>
     </div>
@@ -88,7 +103,7 @@
       <div class="container mt-3">
         {% for message in messages %}
           <div class="alert alert-info alert-dismissible fade show" role="alert">
-            {{ message }}h
+            {{ message }}
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
           </div>
         {% endfor %}

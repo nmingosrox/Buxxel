@@ -1,18 +1,22 @@
 from dotenv import load_dotenv
 import os
 from flask import Flask, render_template, request, redirect, url_for, session, flash, get_flashed_messages
-from models import db, Product, Vendor, Order, Talent
+from db import db, Product, Purveyor, Order
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_migrate import Migrate
 from config import DevelopmentConfig, ProductionConfig
+from routes import global_bp
+from routes import purveyor_bp
+from routes import app_admin_bp
+from routes import market_bp
 
 def create_app():
     # 🔐 Load environment variables from .env
     load_dotenv()
 
     # 🔧 Create Flask app instance
-    app = Flask(__name__
+    app = Flask(__name__)
    
     # load config based on environment (prod/dev)
     if os.environ.get('FLASK_ENV') == 'production':
@@ -28,7 +32,7 @@ def create_app():
     app.register_blueprint(global_bp)
     app.register_blueprint(purveyor_bp)
     app.register_blueprint(market_bp)
-    app.register_blueprint(admin_bp)
+    app.register_blueprint(app_admin_bp)
 
     # 🛡️ Optionally setup login manager, mail, or custom error handlers her
 
@@ -38,8 +42,6 @@ def create_app():
 
     return app
 
-
-
-
 if __name__ == '__main__':
+    app = create_app()
     app.run(debug=True)

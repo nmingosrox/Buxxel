@@ -1,9 +1,11 @@
-from flask import Blueprint, render_template, fla>
-from models import db, Product
+from flask import Blueprint, render_template, Flask
+from db import db, Product
+
+purveyor_bp = Blueprint('purveyor', __name__)
 
 # purveyor blueprint routes go here
-@app.route('/dashboard', methods=['GET', 'POST'])
-def dashboard()
+@purveyor_bp.route('/dashboard', methods=['GET', 'POST'])
+def dashboard():
     # ensure user is logged in as a purveyor
     if 'vendor_id' not in session:
         flash('Please log in...')
@@ -13,24 +15,24 @@ def dashboard()
         # collect form details for adding a product
         name = request.form['name']
         price = request.form['price']
-	description = request.form['description']
+        description = request.form['description']
         image_file = request.files.get('image')
-	    if image_file and image_file.filename != '':
-                filename = secure_filename(image_file.filename)
-                image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                image_file.save(image_path)
 
-                new_product = Product(
-                    name=name,
-                    price=price,
-                    description=description,
-                    image=f'images/{filename}',
-                    vendor_id=session['vendor_id']
-                    )
-                db.session.add(new_product)
-                db.session.commit()
-            flash('product added successfully')
-            return redirect(url_for('purveyor_bp.dashboard')
+        if image_file and image_file.filename != '':
+            filename = secure_filename(image_file.filename)
+#            image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+#            image_file.save(image_path)
+#
+#            new_product = Product(name=name,
+#                price=price,
+#                description=description,
+#                image=f'images/{filename}',
+#                vendor_id=session['vendor_id']
+#                    )
+#            db.session.add(new_product)
+#            db.session.commit()
+#            flash('product added successfully')
+#            return redirect(url_for('purveyor_bp.dashboard')
 
     # Handle search query (GET)
     query = request.args.get('q')
@@ -50,7 +52,7 @@ def dashboard()
 
 
 
-@app.route('/delete/<int:product_id>', methods=['POST'])
+@purveyor_bp.route('/delete/<int:product_id>', methods=['POST'])
 def delete_product(product_id):
     product = Product.query.filter_by(id=product_id, vendor_id=session['vendor_id']).first_or_404()
 
@@ -63,7 +65,7 @@ def delete_product(product_id):
     db.session.commit()
     return redirect(url_for('dashboard'))
 
-app.route('/edit/<int:product_id>', methods=['GET', 'POST'])
+@purveyor_bp.route('/edit/<int:product_id>', methods=['GET', 'POST'])
 def edit_product(product_id):
     product = Product.query.filter_by(id=product_id, vendor_id=session['vendor_id']).first_or_404()
 
@@ -91,7 +93,7 @@ def edit_product(product_id):
     return render_template('edit_product.html', product=product)
 
 
-@app.route('/logout')
+@purveyor_bp.route('/logout')
 def logout():
     session.pop('vendor_id', None)
     session.pop('vendor_username', None)
@@ -100,7 +102,7 @@ def logout():
 
 
 
-@app.route('/vendor/<int:vendor_id>')
+@purveyor_bp.route('/vendor/<int:vendor_id>')
 def vendor_profile(vendor_id):
     vendor = Vendor.query.get_or_404(vendor_id)
     vendor_products = Product.query.filter_by(vendor_id=vendor.id).all()
@@ -117,7 +119,7 @@ def vendor_profile(vendor_id):
                            avg_price=avg_price)
 
 
-@app.route('/vendor/settings', methods=['GET', 'POST'])
+@purveyor_bp.route('/vendor/settings', methods=['GET', 'POST'])
 def vendor_settings():
     vendor_id = session.get('vendor_id')
     if not vendor_id:
